@@ -11,7 +11,7 @@ headers = {
     'Cookie': "stamp=1"
 }
 
-wordlist_path = "/home/nca0x93/SecLists/Passwords/Common-Credentials/top-pin-codes-6-digits.txt"
+wordlist_path = "/home/nca0x93/SecLists/6-DigitPINs/6digitPIN.txt"
 
 try:
     with open(wordlist_path, 'r', encoding='latin-1') as f:
