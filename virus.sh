@@ -7,11 +7,11 @@ fetch_domain_data() {
 
   # Select API key based on index
   if [ $api_key_index -eq 1 ]; then
-    api_key="9fc7f01403ba4de38f1aa345964d3ed1d0e9f43ee46f831169f602c1d0524900"
+    api_key="9fc7f01403ba4de38f1aa345964d3ed1d0e3ee46f831169f602c1d0524900"
   elif [ $api_key_index -eq 2 ]; then
-    api_key="6a1f07c7f9a912d59f06d0f4d30bc1d3aaa78ded215eb91d1b67568b5113dcf6"
+    api_key="6a1f07c7f9a912d59f06d0f4d30bc1d378ded215eb91d1b67568b5113dcf6"
   else
-    api_key="cf72564720f2bb4262f8ccab471e634a1aaf4f405c203c327b7f8ad7736e89be"
+    api_key="cf72564720f2bb4262f8ccab471e631aaf4f405c203c327b7f8ad7736e89be"
   fi
 
   local URL="https://www.virustotal.com/vtapi/v2/domain/report?apikey=$api_key&domain=$domain"
