@@ -91,29 +91,9 @@ Reverse_DNS() {
             grep -Eo "([0-9.]+){4}/[0-9]+" | uniq
     done < "$info/asn.txt" | sort -u > "$info/cidr.txt"
     log "CIDR Enumeration finished: $(wc -l < "$info/cidr.txt") CIDRs found" "$GREEN"
-
-    if [[ -s "$info/cidr.txt" ]]; then
-        while read -r cidr; do
-            cidr_output="$scans/cidr_pentest/$cidr"
-            mkdir -p "$cidr_output"
-
-            masscan "$cidr" -p1-65535 --rate 10000 --output-format json \
-                    -oJ "$cidr_output/masscan_results.json"
-
-            jq -r '.[] | select(.ports[0].status=="open") | "\(.ip):\(.ports[0].port)"' \
-                "$cidr_output/masscan_results.json" | sort -u > "$cidr_output/alive-hosts"
-
-            cat "$cidr_output/alive-hosts" | \
-              go run httpx.go -silent -random-agent -sc -td -ct -cl -server \
-              -H "X-Forwarded-For: 127.0.0.1" -H "X-Forwarded-Host: 127.0.0.1" \
-              -title -srd response | tee -a "$cidr_output/httpx.probe"
-        done < "$info/cidr.txt"
-    else
-        log "No CIDRs – falling back to PTR lookup" "$YELLOW"
         mapcidr -silent < "$info/cidr.txt" | \
-          dnsx -ptr -resp-only -r "$resolvers" -o "$info/ptr.txt"
+          dnsx -ptr -resp-only -silent -r "$resolvers" -o "$info/ptr.txt"
         log "PTR Enumeration finished: $(wc -l < "$info/ptr.txt") records found" "$GREEN"
-    fi
 }
 
 Passive_Enum() {
@@ -209,7 +189,28 @@ crawling() {
 
     log "Spidering finished: $(wc -l < "$scans/final.urls") URLs found" "$GREEN"
 }
+CIDR() {
 
+ if [[ -s "$info/cidr.txt" ]]; then
+        while read -r cidr; do
+            cidr_output="$scans/cidr_pentest/$cidr"
+            mkdir -p "$cidr_output"
+
+            masscan "$cidr" -p1-65535 --rate 10000 --output-format json \
+                    -oJ "$cidr_output/masscan_results.json"
+
+            jq -r '.[] | select(.ports[0].status=="open") | "\(.ip):\(.ports[0].port)"' \
+                "$cidr_output/masscan_results.json" | sort -u > "$cidr_output/alive-hosts"
+
+            cat "$cidr_output/alive-hosts" | \
+              httpx-toolkit -silent -random-agent -sc -td -ct -cl -server \
+              -H "X-Forwarded-For: 127.0.0.1" -H "X-Forwarded-Host: 127.0.0.1" \
+              -title -srd response | tee -a "$cidr_output/httpx.probe"
+        done < "$info/cidr.txt"
+    else
+        log "No CIDRs – falling back to PTR lookup" "$YELLOW"
+        fi
+        }
 ########################################
 # --------------- RUN --------------- #
 ########################################
