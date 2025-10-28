@@ -79,12 +79,12 @@ echo -e "${GREEN}[+] PASSIVE@chaos~# Found${RESET} ${RED}$(cat "$OUTPUT/chaos.su
 echo -e
 
 echo -e "${GREEN}[+] Passive Subdomain Enumeration~#${RESET} shosubgo "
-shosubgo -s PiILLI6oJS0U5nCHRXwNHcmMMHTWNPqU -d "$DOMAIN" -o "$OUTPUT/shosubgo.subs" >/dev/null
+shosubgo -s PiILLI6oJS0U5nCHRXwNHcmMMHTWNPqU1337 -d "$DOMAIN" -o "$OUTPUT/shosubgo.subs" >/dev/null
 echo -e "${GREEN}[+] PASSIVE@shosubgo~# Found${RESET} ${RED}$(cat "$OUTPUT/shosubgo.subs" | wc -l)${RESET} ${GREEN}subdomains${RESET}"
 echo -e
 
 echo -e "${GREEN}[+] Passive Subdomain Enumeration~#${RESET} gitlab "
-gitlab-subdomains -t glpat-DaFJSWdR2_mjUStZjmUz-W86MQp1Omdoa3d1Cw.01.12168p8t3 -d $DOMAIN | anew $OUTPUT/gitlab.subs >/dev/null
+gitlab-subdomains -t glpat-DaFJSWdR2_mjUStZjmUz-W86MQp1Omdoa3d1Cw.01.12168p8t31337 -d $DOMAIN | anew $OUTPUT/gitlab.subs >/dev/null
 echo -e "${GREEN}[+] PASSIVE@gitlab~# Found${RESET} ${RED}$(cat "$OUTPUT/gitlab.subs" | wc -l)${RESET} ${GREEN}subdomains${RESET}"
 echo -e
 
